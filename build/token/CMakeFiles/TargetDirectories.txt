@@ -1,0 +1,3 @@
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token/CMakeFiles/rebuild_cache.dir
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token/CMakeFiles/token.dir
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token/CMakeFiles/edit_cache.dir

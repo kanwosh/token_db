@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/CMakeFiles/token"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/CMakeFiles/token.rule"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/CMakeFiles/token-complete.rule"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-install.rule"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-mkdir.rule"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-download.rule"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-update.rule"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-patch.rule"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-configure.rule"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-build.rule"
+		},
+		{
+			"file" : "/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-test.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"token"
+		],
+		"name" : "token"
+	}
+}

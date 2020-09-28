@@ -1,0 +1,14 @@
+# Target labels
+ token
+# Source files and their labels
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/CMakeFiles/token
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/CMakeFiles/token.rule
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/CMakeFiles/token-complete.rule
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-install.rule
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-mkdir.rule
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-download.rule
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-update.rule
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-patch.rule
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-configure.rule
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-build.rule
+/opt/datai/wicc-wasm-cdt/examples/token_db/build/token-prefix/src/token-stamp/token-test.rule

@@ -1,0 +1,1 @@
+/opt/datai/wicc-wasm-cdt/build/bin/wasm-lld  CMakeFiles/token.dir/token.cpp.obj -o token.wasm 

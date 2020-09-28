@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/opt/datai/wicc-wasm-cdt/examples/token_db/src/../include/token.hpp
+wasm.hpp
+-
+asset.hpp
+-
+table.hpp
+-
+inline_transaction.hpp
+-
+tokendb.hpp
+-
+string
+-
+
+/opt/datai/wicc-wasm-cdt/examples/token_db/src/../include/tokendb.hpp
+wasm.hpp
+-
+asset.hpp
+-
+table.hpp
+-
+
+/opt/datai/wicc-wasm-cdt/examples/token_db/src/token.cpp
+token.hpp
+-
+
