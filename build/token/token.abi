@@ -13,6 +13,10 @@
                 {
                     "name": "balance",
                     "type": "asset"
+                },
+                {
+                    "name": "account_id",
+                    "type": "uint64"
                 }
             ]
         },
@@ -61,8 +65,8 @@
                     "type": "regid"
                 },
                 {
-                    "name": "KeyId",
-                    "type": "symbol"
+                    "name": "scope_id",
+                    "type": "uint64"
                 }
             ]
         },

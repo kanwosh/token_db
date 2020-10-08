@@ -13,44 +13,46 @@ ACTION token::create( regid  issuer,
    check( maximum_supply.is_valid(), "invalid supply" );
    check( maximum_supply.amount > 0, "max-supply must be positive" );
 
-   currency_stats st;
+   currency_stats st(sym.code().raw());
      
    st.supply.symbol = sym;
    st.max_supply = maximum_supply;
    st.issuer = issuer;
 
    check( !db::get(st), "token with symbol already exists" );
-  
    db::set(st);
 
 }
 
 ACTION token::issue( regid to, asset quantity, string memo )
-{
+{  
+   //print("issue .....");
     auto sym = quantity.symbol;
     check( sym.is_valid(), "invalid symbol name" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
 
-    currency_stats st;
+    currency_stats st(sym.code().raw());
     st.supply.symbol = sym;
     check( db::get( st ), "token with symbol does not exist, create token before issue" );
-
     require_auth( st.issuer );
     check( quantity.is_valid(), "invalid quantity" );
     check( quantity.amount > 0, "must issue positive quantity" );
     check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     check( quantity.amount <= st.max_supply.amount - st.supply.amount, "quantity exceeds available supply");
-
     st.supply += quantity;
     db::set( st );
-
+   print("444\n");
     add_balance( st.issuer, quantity, st.issuer );
-
+   print("55555s\n");
     if( to != st.issuer ) {
+             print("6666\n",st.issuer);
       wasm::transaction inline_trx(get_self(), name("transfer"), std::vector<permission>{{st.issuer, name("wasmio.owner")}}, std::tuple(st.issuer, to, quantity, memo));
+      print("7777\n");
       inline_trx.send();
 
     }
+
+    print("88888");
 }
 
 ACTION token::retire( asset quantity, string memo )
@@ -59,7 +61,7 @@ ACTION token::retire( asset quantity, string memo )
     check( sym.is_valid(), "invalid symbol name" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
 
-    currency_stats st;
+    currency_stats st(sym.code().raw());
     st.supply.symbol = sym;
     check( db::get( st ), "token with symbol does not exist" );
 
@@ -84,7 +86,7 @@ ACTION token::transfer( regid    from,
     check( is_account( to ), "to account does not exist");
     auto sym = quantity.symbol.code();
 
-    currency_stats st;
+    currency_stats st(sym.raw());
     st.supply.symbol = quantity.symbol;
     db::get( st );
 
@@ -103,28 +105,32 @@ ACTION token::transfer( regid    from,
 }
 
 void token::sub_balance( regid owner, asset value ) {
-   account from;
+   account from(owner.value);
    from.balance.symbol = value.symbol;
 
    check( db::get( from ), "no balance object found" );
    check( from.balance.amount >= value.amount, "overdrawn balance" );
 
    from.balance -= value;
+   print("sub_balance from.balance = \n",from.balance);
+   print("from.owner = \n", from.owner);
    db::set( from );
 }
 
 
 void token::add_balance( regid owner, asset value, regid payer )
 {
-   account to;
+   account to(owner.value);
+   //print("add 11111 = ", value.symbol);
    to.balance.symbol = value.symbol;
+   db::get(to);
    if( !db::get( to )) {
         to.owner   = owner;
         to.balance = value;
    } else {
         to.balance += value;
    }
-
+   print("to = ",to.balance, to.owner);
    db::set(to);
 }
 
@@ -132,15 +138,16 @@ ACTION token::open( regid owner, const symbol& symbol, regid payer )
 {
    require_auth( payer );
 
-   currency_stats st;
+   auto sym_code_raw = symbol.code().raw();
+   currency_stats st(sym_code_raw);
    st.supply.symbol = symbol;
    check( db::get( st ), "symbol does not exist" );
    check( st.supply.symbol == symbol, "symbol precision mismatch" );
 
-   account account;
+   account account(owner.value);
    account.balance.symbol = symbol;
 
-   if( ! db::get( account ) ) {
+   if( !db::get( account ) ) {
       account.owner = owner;
       account.balance = asset{0, symbol};
       db::set(account);
@@ -151,7 +158,7 @@ ACTION token::close( regid owner, const symbol& symbol )
 {
    require_auth( owner );
 
-   account account;
+   account account(owner.value);
    account.balance.symbol = symbol;
 
    check( db::get(account), "Balance row already deleted or never existed. Action won't have any effect." );

@@ -11,7 +11,14 @@ namespace wasm{
             regid owner;
             asset balance;
 
-            uint64_t primary_key()const {return balance.symbol.code().raw(); }
+            uint64_t account_id;
+            uint64_t primary_key() const {return balance.symbol.code().raw(); }
+            uint64_t scope() const {return account_id;}
+
+            account() {}
+            account(uint64_t i): account_id(i) {}
+
+            WASMLIB_SERIALIZE( account, (owner)(balance)(account_id))
         };
         typedef wasm::table<"accounts"_n, account, uint64_t> accounts;
 
@@ -20,11 +27,15 @@ namespace wasm{
             asset supply;
             asset max_supply;
             regid issuer;
-
-            // 主键ID
-            symbol KeyId;
+            uint64_t scope_id;
 
             uint64_t primary_key()const {return supply.symbol.code().raw(); }
+            uint64_t scope()const {return scope_id; }
+
+            currency_stats() {}
+            currency_stats(uint64_t i): scope_id(i){}
+
+            WASMLIB_SERIALIZE( currency_stats, (supply)(max_supply)(issuer)(scope_id))
         };
         typedef wasm::table< "stat"_n, currency_stats, uint64_t > stats;
 
@@ -54,10 +65,9 @@ namespace wasm{
         template<typename ObjectType>
         // get info from db
         bool get(ObjectType& object) {
-            ObjectType obj;
-            typename get_table_type<ObjectType>::type objects(regid(wasm::db::reserved), object.primary_key());
+            typename get_table_type<ObjectType>::type objects(regid(wasm::db::reserved), object.scope());
 
-            if (!objects.get(obj, object.primary_key())) return false;
+            if (!objects.get(object, object.primary_key())) return false;
 
             return true;
         }
@@ -65,7 +75,7 @@ namespace wasm{
         template<typename ObjectType>
         return_t set(const ObjectType& object) {
             ObjectType obj;
-            typename get_table_type<ObjectType>::type objects(regid(wasm::db::reserved), object.primary_key());
+            typename get_table_type<ObjectType>::type objects(regid(wasm::db::reserved), object.scope());
 
             if (objects.get( obj, object.primary_key() )) {
                 objects.modify( obj, wasm::no_payer, [&]( auto& s ) {
@@ -82,7 +92,7 @@ namespace wasm{
 
         template<typename ObjectType>
         void del(const ObjectType& object) {
-            typename get_table_type<ObjectType>::type objects(regid(wasm::db::reserved), object.primary_key());
+            typename get_table_type<ObjectType>::type objects(regid(wasm::db::reserved), object.scope());
             objects.erase(object.primary_key(), wasm::no_payer);
         }
     }
